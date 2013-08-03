@@ -1,10 +1,19 @@
 (ns show-of-hands.core
   (:gen-class))
+(defn max-value [h]
+  (apply max (vals h))
+  )
+(defn max-keys-based-on-value [h]
+  (let [m (max-value h)]
+    (into [] (for [[k v] h :when (= v m)] k))
+    )
+  )
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (def ballotSheets [[1 2 3 ] [2 3 1] [2 1 3]])
+  (def ballotSheets [[1 2 3] [2 3 1] [2 1 3] [3 1 2] [3 2 1]])
   (def firstChoices (map first ballotSheets))
   (def freq (frequencies firstChoices))
-  (def winner (key (apply max-key val freq)))
-)
+  (def winners (max-keys-based-on-value freq))
+  (println winners)
+  )
