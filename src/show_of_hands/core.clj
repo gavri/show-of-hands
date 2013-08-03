@@ -1,4 +1,4 @@
-(load-file "lib/show-of-hands-lib.clj")
+(load-file "extensions/show-of-hands-lib.clj")
 (ns show-of-hands.core
   (:gen-class))
 (defn -main
