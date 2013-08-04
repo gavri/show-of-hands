@@ -9,9 +9,9 @@
     )
   )
 (defn -main
-  "I don't do a whole lot ... yet."
+  "main"
   [& args]
-  (def ballotSheets [[1 2 3] [2 3 1] [2 1 3] [3 1 2] [3 2 1]])
+  (def ballotSheets (if args (read-string (first args)) [[1 2 3] [2 3 1] [2 1 3] [3 1 2] [3 2 1]]))
   (def firstChoices (map first ballotSheets))
   (def freq (frequencies firstChoices))
   (def winners (max-keys-based-on-value freq))
