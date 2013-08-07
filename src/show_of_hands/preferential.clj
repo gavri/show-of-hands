@@ -1,23 +1,22 @@
 (ns show-of-hands.preferential (:require [show-of-hands.extensions :refer :all]) (:gen-class))
 
-(defn candidateWithLowestNumberOfTopRanks [frequencyOfTopRankedCandidates]
-  (key (reduce (partial min-key val) frequencyOfTopRankedCandidates))
-)
-
 (defn ballotSheetsWithOneCandidateRemoved [ballotSheets candidateTobeRemoved]
   (map (partial remove #(= % candidateTobeRemoved)) ballotSheets)
 )
 
-(defn winners [ballotSheets]
+(defn frequencyOfTopRankedCandidates [ballotSheets]
   (def topRanks (map first ballotSheets))
-  (def countOfUniqueTopRankedCandidates (count (set topRanks)))
-  (def frequencyOfTopRankedCandidates (frequencies topRanks))
-  (def numberOfUniqueTopRanks (count (vals frequencyOfTopRankedCandidates)))
+  (frequencies topRanks)
+)
+
+(defn winners [ballotSheets s]
+  (def tally (frequencyOfTopRankedCandidates ballotSheets))
+  (def numberOfUniqueTopRanks (count tally))
   (if (= numberOfUniqueTopRanks 1)
-    (keys frequencyOfTopRankedCandidates)
+    (keys tally)
     (do
-      (def candidateTobeRemoved (candidateWithLowestNumberOfTopRanks frequencyOfTopRankedCandidates))
-      (winners (ballotSheetsWithOneCandidateRemoved ballotSheets candidateTobeRemoved))
+      (def candidateTobeRemoved (s ballotSheets))
+      (winners (ballotSheetsWithOneCandidateRemoved ballotSheets candidateTobeRemoved) s)
       )
     )
   )
