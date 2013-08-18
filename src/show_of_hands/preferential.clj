@@ -13,7 +13,7 @@
   (def tally (frequency-of-top-ranked-candidates ballot-sheets))
   (def number-of-unique-top-ranks (count tally))
   (if (= number-of-unique-top-ranks 1)
-    (keys tally)
+    (first (keys tally))
     (do
       (def candidate-to-be-removed (s ballot-sheets))
       (winners (ballot-sheets-with-one-candidate-removed ballot-sheets candidate-to-be-removed) s)
